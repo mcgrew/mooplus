@@ -51,7 +51,7 @@ Asset.Style = new Class({
 		this.styleNode = new Element("style",{
 			'type':'text/css',
 			'media':'screen'
-		}
+		});
 
 		var styles = $$('head link,head style');
 		if ( this.options.priority == 'highest' )
