@@ -29,16 +29,24 @@ Returns:
 */
 var $get = function( varName, defaultValue )
 {
-		if ( arguments.length < 1 )
-				return;
-		var queryString = window.location.toString( ).split( '?' )[ 1 ];
-		var value = new RegExp( "(^|&)" + varName + "=([^&]*)(&|$)" ).exec( queryString )
-		if ( value )
-				return value[ 2 ]
-		if ( arguments.length >= 2 )
-						return defaultValue;
-		return null;
+	if ( arguments.length < 1 )
+		return;
+	var queryString = window.location.toString( ).split( '?' )[ 1 ];
+	var value = new RegExp( "(^|&)" + varName + "=([^&]*)(&|$)" ).exec( queryString )
+	if ( value )
+		return value[ 2 ]
+	if ( arguments.length >= 2 )
+		return defaultValue;
+	return null;
 }
 
-
-
+var $benchmark = function( func, args, label ){
+	if ( !label ) label = 'runtime';
+	if ( !args ) args = [ ];
+	var t = - ( new Date( ).getTime( ) )
+	var returnvalue = func.run( args );
+	if ( window.console && console.log )
+		console.log( label + ': ' + (t + new Date( ).getTime( )) + 'ms' )
+	return returnvalue;
+				    
+}
