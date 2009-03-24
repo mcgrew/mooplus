@@ -64,13 +64,53 @@ var $get = function( varName, defaultValue )
 	return null;
 }
 
-var $benchmark = function( func, args, label ){
+/*
+
+Function: $benchmark
+	Logs the time taken to execute a function and returns its return value.
+
+Arguments:
+	func - The function to be executed.
+	args - An array containing the arguments to be passed to the function. Alternatively a single value may be passed.
+	label - A label to be prepended to the log entry. Defaults to 'runtime'.
+
+Returns:
+	The return value of the passed in function.
+
+ */
+var $benchmark = function( func, args, label )
+{
 	if ( !label ) label = 'runtime';
 	if ( !args ) args = [ ];
 	var t = - ( new Date( ).getTime( ) )
 	var returnvalue = func.run( args );
-	if ( window.console && console.log )
-		console.log( label + ': ' + (t + new Date( ).getTime( )) + 'ms' )
+	$log( label + ': ' + (t + new Date( ).getTime( )) + 'ms' )
 	return returnvalue;
 				    
 }
+
+/*
+
+Function: $log
+	Prints a message to console.log if it is available.
+
+Arguments:
+	String[s] to be printed to the logger
+
+Returns:
+	True if console.log is available, false otherwise
+
+ */
+var $log = function( )
+{
+	if ( window.console && console.log )
+	{
+		for ( var i = 0; i < arguments.length; i++ )
+		{
+			console.log( arguments[ i ] );
+		}
+		return true;
+	}
+	return false;
+}
+
