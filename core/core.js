@@ -46,17 +46,25 @@ url.
 Arguments:
 		varName - the name of the variable to request
 		defaultValue - The value to be returned if the passed in variable is not present in the query string. This paramater is optional, and the function will return null in it's stead.
+		bubble - If true, this function will bubble up through the parent frames looking for get values if they are not set on the current frame. Defaults to true.
 
 Returns:
 		A string containing the value of the GET variable.
 
 */
-var $get = function( varName, defaultValue )
+var $get = function( varName, defaultValue, bubble )
 {
 	if ( arguments.length < 1 )
 		return;
-	var queryString = window.location.toString( ).split( '?' )[ 1 ];
-	var value = new RegExp( "(^|&)" + varName + "=([^&]*)(&|$)" ).exec( queryString )
+	if (!$defined( bubble )) bubble = true;
+	var getValue = function( win )
+	{
+		var queryString = win.location.toString( ).split( '?' )[ 1 ];
+		var value = new RegExp( "(^|&)" + varName + "=([^&]*)(&|$)" ).exec( queryString );
+		if ( !value && bubble && win != win.parent ) return getValue( win.parent );
+		return value;
+	}
+	var value = getValue( window );
 	if ( value )
 		return value[ 2 ]
 	if ( arguments.length >= 2 )
