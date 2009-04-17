@@ -82,7 +82,7 @@ Asset.Style = new Class({
 			this.options.priority =  styles.length;
 		var nextSibling = ( styles[ this.options.priority ] ) ? styles[ this.options.priority ] : null;
 		document.head.insertBefore( this.styleNode, nextSibling );
-/*
+
 		if ( Browser.Engine.trident ) // IE
 		{
 			if ( document.styleSheets && document.styleSheets.length > 0 )
@@ -95,8 +95,8 @@ Asset.Style = new Class({
 				alert( "Unable to add style rules!" );
 			}
 		}
-*/
-		},
+
+	},
 
 	addRule: function( selector, declaration )
 	{
